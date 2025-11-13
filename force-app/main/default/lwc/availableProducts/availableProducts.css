@@ -1,0 +1,124 @@
+/* Product cards styling */
+.slds-card {
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+}
+
+.slds-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.slds-card__body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.slds-grid_vertical {
+    height: 100%;
+}
+
+.slds-col:last-child {
+    margin-top: auto;
+}
+
+/* Success message animation */
+.slds-theme_success {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading state */
+.slds-spinner_container {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Product card styling for items already in order */
+.slds-theme_shade {
+    background-color: #f3f3f3;
+    border-left: 4px solid #4bca81;
+}
+
+/* Button hover effects */
+lightning-button {
+    transition: all 0.2s ease-in-out;
+}
+
+lightning-button:hover {
+    transform: scale(1.05);
+}
+
+/* Modal styling */
+.slds-modal__container {
+    max-width: 90vw;
+    width: 1200px;
+}
+
+.slds-modal__content {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Tree grid styling */
+lightning-tree-grid {
+    --slds-c-tree-grid-header-color-background: #f3f3f3;
+    --slds-c-tree-grid-header-color-border: #dddbda;
+}
+
+/* Tree grid row styling */
+lightning-tree-grid .slds-tree__item {
+    min-height: 2.5rem;
+}
+
+/* Parent node styling */
+lightning-tree-grid .slds-tree__item[aria-level="1"] {
+    font-weight: 600;
+    background-color: #fafaf9;
+}
+
+/* Child node styling */
+lightning-tree-grid .slds-tree__item[aria-level="2"] {
+    font-weight: normal;
+}
+
+/* Modal backdrop */
+.slds-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .slds-col.slds-size_1-of-2 {
+        width: 100%;
+    }
+    
+    .slds-modal__container {
+        max-width: 95vw;
+        width: 95vw;
+    }
+    
+    .slds-modal__content {
+        max-height: 60vh;
+    }
+}
+
+/* Add Product button styling */
+.slds-grid_align-spread {
+    align-items: center;
+}
+
+/* Product count styling */
+.slds-text-color_weak {
+    font-style: italic;
+}

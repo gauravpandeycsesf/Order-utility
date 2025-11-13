@@ -1,0 +1,17 @@
+<template>
+    <div class="slds-grid slds-grid_vertical slds-gutters">
+        <div class="slds-col">
+            <c-available-products 
+                record-id={recordId}
+                is-order-activated={isOrderActivated}
+                onproductadded={handleProductAdded}>
+            </c-available-products>
+        </div>
+        <div class="slds-col">
+            <c-order-products 
+                record-id={recordId}
+                onorderactivated={handleOrderActivated}>
+            </c-order-products>
+        </div>
+    </div>
+</template>
