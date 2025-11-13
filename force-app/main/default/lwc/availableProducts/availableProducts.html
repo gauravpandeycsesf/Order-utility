@@ -1,0 +1,141 @@
+<template>
+    <lightning-card title="Available Products" icon-name="standard:product">
+         <div class="slds-p-around_medium">
+            <template if:true={isLoading}>
+                <div class="slds-text-align_center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading products..." size="medium"></lightning-spinner>
+                    <p class="slds-text-body_regular slds-m-top_small">Loading available products...</p>
+                </div>
+            </template>
+            
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small">
+                        <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
+                    </span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+            
+            <template if:true={hasAvailableProducts}>
+                <div class="slds-m-bottom_large">
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <div>
+                            <h3 class="slds-text-heading_small slds-m-bottom_small">
+                                <lightning-icon icon-name="utility:add" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                Add Products to Order
+                            </h3>
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                <template if:true={availableProducts}>
+                                    {availableProductsCount} products available to add
+                                </template>
+                                <template if:false={availableProducts}>
+                                    0 products available to add
+                                </template>
+                            </p>
+                        </div>
+                        <div>
+                            <lightning-button 
+                                variant="brand" 
+                                label="Add Product"
+                                icon-name="utility:add"
+                                onclick={handleShowProductTable}
+                                disabled={isAddProductDisabled}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            
+            <template if:false={hasProducts}>
+                <div class="slds-text-align_center slds-p-around_large">
+                    <lightning-icon icon-name="standard:product" size="large" variant="inverse"></lightning-icon>
+                    <p class="slds-text-heading_medium slds-m-top_medium">No products available</p>
+                    <p class="slds-text-body_regular slds-text-color_weak">
+                        No products are available for this order. Please ensure the order has a pricebook assigned.
+                    </p>
+                </div>
+            </template>
+            
+            <template if:true={showSuccessMessage}>
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_success" role="alert">
+                    <span class="slds-assistive-text">Success</span>
+                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_x-small">
+                        <lightning-icon icon-name="utility:success" size="x-small" variant="inverse"></lightning-icon>
+                    </span>
+                    <h2>Product added to order successfully!</h2>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+
+    <!-- Product Selection Modal -->
+    <template if:true={showProductTable}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" onclick={handleCloseProductTable} alternative-text="close" variant="bare-inverse" class="slds-modal__close"></lightning-button-icon>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select Products to Add</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-m-bottom_medium">
+                        <p class="slds-text-body_regular">
+                            Select child products from the tree below to add them to the order. <strong>You can select only one child product per parent.</strong> Each product will be added with a quantity of 1. If a product is already in the order, selecting it again will increase the quantity by 1.
+                        </p>
+                        <template if:true={hasSelectedProducts}>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_small">
+                                {selectedProductsCount} product(s) selected
+                            </p>
+                        </template>
+                    </div>
+                    
+                    <div class="slds-m-bottom_medium">
+                        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                            <div class="slds-col slds-grow">
+                                <lightning-input
+                                    type="search"
+                                    label="Search Products"
+                                    placeholder="Search by parent product name..."
+                                    value={searchTerm}
+                                    onchange={handleSearchChange}
+                                    variant="label-hidden"
+                                    class="slds-m-bottom_small">
+                                </lightning-input>
+                            </div>
+                            <template if:true={isSearching}>
+                                <div class="slds-col slds-no-flex slds-m-left_small">
+                                    <lightning-spinner alternative-text="Searching..." size="small"></lightning-spinner>
+                                </div>
+                            </template>
+                        </div>
+                        <template if:true={hasSearchTerm}>
+                            <p class="slds-text-body_small slds-text-color_weak">
+                                Showing {filteredTreeDataCount} parent product(s) matching your search
+                            </p>
+                        </template>
+                    </div>
+                    
+                    <lightning-tree-grid
+                        data={treeData}
+                        columns={productColumns}
+                        key-field="productId"
+                        selected-rows={selectedProductIds}
+                        onrowselection={handleProductSelection}
+                        expanded-rows={expandedRows}>
+                    </lightning-tree-grid>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={handleCloseProductTable}></lightning-button>
+                    <lightning-button 
+                        variant="brand" 
+                        label="Add Selected Products" 
+                        onclick={handleAddSelectedProducts}
+                        disabled={isAddingProducts}>
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
