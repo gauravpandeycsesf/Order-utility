@@ -1,0 +1,16 @@
+.slds-scrollable_x {
+    overflow-x: auto;
+}
+
+.slds-table {
+    min-width: 100%;
+}
+
+.slds-text-title_caps {
+    font-weight: bold;
+}
+
+.datatable-container {
+    height: 300px;
+    overflow-y: auto;
+}
