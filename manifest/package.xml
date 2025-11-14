@@ -19,6 +19,7 @@
 
     <types>
         <members>Product2</members>
+        <members>Order</members>
         <name>CustomObject</name>
     </types>
     
