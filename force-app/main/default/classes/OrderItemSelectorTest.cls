@@ -78,6 +78,31 @@ private class OrderItemSelectorTest {
     }
 
     @IsTest
+    static void testGetOrderItemByOrderAndProduct_Coverage() {
+        // Test method execution path for coverage (without inserting data)
+        // This tests the query construction and execution path
+        Test.startTest();
+        OrderItemSelector selector = new OrderItemSelector();
+        
+        // Test with different order and product IDs to cover the method
+        OrderItem result1 = selector.getOrderItemByOrderAndProduct(
+            (Id) '801000000000001AAA',
+            (Id) '01t000000000001AAA'
+        );
+        
+        OrderItem result2 = selector.getOrderItemByOrderAndProduct(
+            (Id) '801000000000002AAA',
+            (Id) '01t000000000002AAA'
+        );
+        
+        Test.stopTest();
+
+        // Both should return null since no data exists, but method execution is covered
+        System.assertEquals(null, result1, 'Should return null for non-existent order item');
+        System.assertEquals(null, result2, 'Should return null for non-existent order item');
+    }
+
+    @IsTest
     static void testGetOrderItemsByIds_EmptyList() {
         Test.startTest();
         OrderItemSelector selector = new OrderItemSelector();
