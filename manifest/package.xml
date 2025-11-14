@@ -26,5 +26,11 @@
         <members>Order_Record_Page</members>
         <name>FlexiPage</name>
     </types>
+
+    <types>
+        <members>admin</members>
+        <name>Profile</name>
+    </types>
+
     <version>65.0</version>
 </Package>
