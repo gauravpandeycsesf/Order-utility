@@ -1,0 +1,188 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww34360\viewh19320\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 openapi: 3.0.0\
+info:\
+  title: Product REST API\
+  description: REST API for fetching products by name in Salesforce\
+  version: 1.0.0\
+  contact:\
+    name: API Support\
+\
+servers:\
+  - url: https://orgfarm-fe52cd001f-dev-ed.develop.my.salesforce.com/services/apexrest\
+    description: Salesforce instance (replace \{instance\} with your Salesforce instance, e.g., mydomain.my.salesforce.com)\
+    variables:\
+      instance:\
+        default: orgfarm-fe52cd001f-dev-ed.develop.my.salesforce.com\
+        description: Your Salesforce instance URL\
+\
+tags:\
+  - name: Products\
+    description: Product related operations\
+\
+paths:\
+  /products:\
+    get:\
+      tags:\
+        - Products\
+      summary: Get products by name\
+      description: |\
+        Retrieves products matching the provided name. Supports partial matching (case-insensitive).\
+        Only returns active products. Optionally filter by pricebook to include pricing information.\
+      operationId: getProductsByName\
+      parameters:\
+        - name: name\
+          in: query\
+          required: false\
+          description: Product name to search for (supports partial matching)\
+          schema:\
+            type: string\
+            example: "Sim"\
+          examples:\
+            exact:\
+              summary: Exact match\
+              value: "Test Product One"\
+            partial:\
+              summary: Partial match\
+              value: \'93Product\'94\
+        - name: pricebookId\
+          in: query\
+          required: true\
+          description: Pricebook ID to filter products and include pricing information\
+          schema:\
+            type: string\
+            pattern: '^01s[a-zA-Z0-9]\{15\}$'\
+            example: "01sgK000004mjlKQAQ"\
+      responses:\
+        '200':\
+          description: Successful response - Returns list of matching products\
+          content:\
+            application/json:\
+              schema:\
+                type: array\
+                items:\
+                  $ref: '#/components/schemas/ProductResponse'\
+              examples:\
+                success:\
+                  summary: Products found\
+                  value:\
+                    - id: "01t5j000000abcdAAA"\
+                      name: "Test Product One"\
+                      productCode: "TP001"\
+                      description: "Test Product Description One"\
+                      family: "Test Family"\
+                      isActive: true\
+                      listPrice: 100.00\
+                      pricebookEntryId: "01u5j000000abcdAAA"\
+                empty:\
+                  summary: No products found\
+                  value: []\
+        '400':\
+          description: Bad request - Missing or invalid parameters\
+          content:\
+            application/json:\
+              schema:\
+                $ref: '#/components/schemas/ErrorResponse'\
+              examples:\
+                missingName:\
+                  summary: Missing name parameter\
+                  value:\
+                    error: "Product name parameter is required"\
+        '500':\
+          description: Internal server error\
+          content:\
+            application/json:\
+              schema:\
+                $ref: '#/components/schemas/ErrorResponse'\
+              example:\
+                error: "Error retrieving products: [error message]"\
+      security:\
+        - OAuth2: []\
+        - BearerAuth: []\
+\
+components:\
+  schemas:\
+    ProductResponse:\
+      type: object\
+      description: Product information response\
+      properties:\
+        id:\
+          type: string\
+          description: Salesforce Product ID\
+          example: "01t5j000000abcdAAA"\
+        name:\
+          type: string\
+          description: Product name\
+          example: "Test Product One"\
+        productCode:\
+          type: string\
+          description: Product code\
+          example: "TP001"\
+          nullable: true\
+        description:\
+          type: string\
+          description: Product description\
+          example: "Test Product Description One"\
+          nullable: true\
+        family:\
+          type: string\
+          description: Product family\
+          example: "Test Family"\
+          nullable: true\
+        isActive:\
+          type: boolean\
+          description: Whether the product is active\
+          example: true\
+        listPrice:\
+          type: number\
+          format: double\
+          description: List price from pricebook entry (0 if pricebookId not provided or product not in pricebook)\
+          example: 100.00\
+        pricebookEntryId:\
+          type: string\
+          description: Pricebook entry ID (null if pricebookId not provided or product not in pricebook)\
+          example: "01u5j000000abcdAAA"\
+          nullable: true\
+      required:\
+        - id\
+        - name\
+        - isActive\
+        - listPrice\
+    \
+    ErrorResponse:\
+      type: object\
+      description: Error response\
+      properties:\
+        error:\
+          type: string\
+          description: Error message\
+          example: "Product name parameter is required"\
+      required:\
+        - error\
+\
+  securitySchemes:\
+    OAuth2:\
+      type: oauth2\
+      description: Salesforce OAuth 2.0 authentication\
+      flows:\
+        authorizationCode:\
+          authorizationUrl: https://login.salesforce.com/services/oauth2/authorize\
+          tokenUrl: https://login.salesforce.com/services/oauth2/token\
+          scopes:\
+            api: Access REST API\
+        password:\
+          tokenUrl: https://login.salesforce.com/services/oauth2/token\
+          scopes:\
+            api: Access REST API\
+    BearerAuth:\
+      type: http\
+      scheme: bearer\
+      bearerFormat: JWT\
+      description: Salesforce Session ID or Access Token (Bearer token authentication)\
+\
+}
