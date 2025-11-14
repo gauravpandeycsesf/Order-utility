@@ -1,4 +1,7 @@
 @IsTest
+/**
+ * Test coverage for Order Management Service.
+ */
 private class OrderManagementServiceTest {
 
     static final Id ORDER_ID = (Id) '801000000000001AAA';
@@ -10,6 +13,9 @@ private class OrderManagementServiceTest {
     static final Id PBE_B_ID = (Id) '01u000000000002AAA';
     static final Id PBE_C_ID = (Id) '01u000000000003AAA';
 
+    /**
+     * Creates order.
+     */
     private static Order makeOrder(Id idVal, Id pricebookId, String status) {
         Order o = new Order();
         o.Id = idVal;
@@ -18,6 +24,9 @@ private class OrderManagementServiceTest {
         return o;
     }
 
+    /**
+     * Verifies get available products for order success.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_Success() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -46,6 +55,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies get available products for order empty order.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_EmptyOrder() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -73,6 +85,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies get available products for order no pricebook.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_NoPricebook() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -93,6 +108,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies get order products success.
+     */
     @IsTest
     static void testGetOrderProducts_Success() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -117,6 +135,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies get order products empty order.
+     */
     @IsTest
     static void testGetOrderProducts_EmptyOrder() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -137,6 +158,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies get order items for display success.
+     */
     @IsTest
     static void testGetOrderItemsForDisplay_Success() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -158,6 +182,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities success.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_Success() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -188,6 +215,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities empty map.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_EmptyMap() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -210,6 +240,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities null map.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_NullMap() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -232,6 +265,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities invalid order id.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_InvalidOrderId() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -258,6 +294,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities order without pricebook.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_OrderWithoutPricebook() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -284,6 +323,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies add products updates existing and normalizes others.
+     */
     @IsTest
     static void testAddProducts_updatesExisting_andNormalizesOthers() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -324,6 +366,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies add products inserts only when no existing items.
+     */
     @IsTest
     static void testAddProducts_insertsOnly_whenNoExistingItems() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -356,6 +401,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies activate order success.
+     */
     @IsTest
     static void testActivateOrder_Success() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -374,6 +422,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies can activate order true.
+     */
     @IsTest
     static void testCanActivateOrder_True() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -394,6 +445,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies can activate order false no items.
+     */
     @IsTest
     static void testCanActivateOrder_False_NoItems() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -414,6 +468,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies can activate order false already activated.
+     */
     @IsTest
     static void testCanActivateOrder_False_AlreadyActivated() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -433,6 +490,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies can activate order invalid order id.
+     */
     @IsTest
     static void testCanActivateOrder_InvalidOrderId() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -452,6 +512,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies update order item quantities success.
+     */
     @IsTest
     static void testUpdateOrderItemQuantities_Success() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -477,6 +540,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies update order item quantities empty map.
+     */
     @IsTest
     static void testUpdateOrderItemQuantities_EmptyMap() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -496,6 +562,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies update order item quantities null map.
+     */
     @IsTest
     static void testUpdateOrderItemQuantities_NullMap() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -515,6 +584,9 @@ private class OrderManagementServiceTest {
         }
     }
 
+    /**
+     * Verifies update order item quantities invalid ids.
+     */
     @IsTest
     static void testUpdateOrderItemQuantities_InvalidIds() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();

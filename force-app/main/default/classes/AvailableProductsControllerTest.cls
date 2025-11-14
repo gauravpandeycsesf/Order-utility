@@ -1,12 +1,21 @@
 @IsTest
+/**
+ * Test coverage for Available Products Controller.
+ */
 private class AvailableProductsControllerTest {
 
+    /**
+     * Handles prod.
+     */
     private static Product2 prod(String id18, String code, String name, Id parentOpt) {
         Product2 p = ApplicationDependencyTestKit.p(id18, code, name);
         if (parentOpt != null) p.put('Parent_Product__c', parentOpt);
         return p;
     }
 
+    /**
+     * Creates order.
+     */
     private static Order makeOrder(Id idVal, Id pricebookId) {
         Order o = new Order();
         o.Id = idVal;
@@ -14,6 +23,9 @@ private class AvailableProductsControllerTest {
         return o;
     }
 
+    /**
+     * Verifies get available products success.
+     */
     @IsTest
     static void testGetAvailableProducts_Success() {
         Id orderId = (Id) '801000000000001AAA';
@@ -68,6 +80,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies get available products empty order.
+     */
     @IsTest
     static void testGetAvailableProducts_EmptyOrder() {
         Id orderId = (Id) '801000000000002AAA';
@@ -106,6 +121,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities success.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_Success() {
         Id orderId = (Id) '801000000000003AAA';
@@ -149,6 +167,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities empty map.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_EmptyMap() {
         Id orderId = (Id) '801000000000004AAA';
@@ -174,6 +195,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities product not in pricebook.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_ProductNotInPricebook() {
         Id orderId = (Id) '801000000000005AAA';
@@ -215,6 +239,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities bulk.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_Bulk() {
         Id orderId = (Id) '801000000000006AAA';
@@ -263,6 +290,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities map object object.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_MapObjectObject() {
         Id orderId = (Id) '801000000000007AAA';
@@ -302,6 +332,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities map string object.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_MapStringObject() {
         Id orderId = (Id) '801000000000008AAA';
@@ -341,6 +374,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities different numeric types.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_DifferentNumericTypes() {
         Id orderId = (Id) '801000000000009AAA';
@@ -384,6 +420,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities with pricebook id.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_WithPricebookId() {
         Id orderId = (Id) '801000000000010AAA';
@@ -424,6 +463,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Verifies add products to order with quantities exception handling.
+     */
     @IsTest
     static void testAddProductsToOrderWithQuantities_ExceptionHandling() {
         Id orderId = (Id) '801000000000011AAA';
@@ -457,6 +499,9 @@ private class AvailableProductsControllerTest {
         }
     }
 
+    /**
+     * Handles tree.
+     */
     private static List<AvailableProductsController.ProductTreeNode> flattenTree(List<AvailableProductsController.ProductTreeNode> nodes) {
         List<AvailableProductsController.ProductTreeNode> flat = new List<AvailableProductsController.ProductTreeNode>();
         if (nodes == null) {

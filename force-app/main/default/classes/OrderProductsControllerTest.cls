@@ -5,6 +5,9 @@
 @isTest
 private class OrderProductsControllerTest {
 
+    /**
+     * Creates order.
+     */
     private static Order makeOrder(Id idVal, Id pricebookId, String status) {
         Order o = new Order();
         o.Id = idVal;
@@ -36,6 +39,9 @@ private class OrderProductsControllerTest {
 
     // -------- tests --------
 
+    /**
+     * Gets order items returns wrapped rows.
+     */
     @IsTest
     static void getOrderItems_returns_wrapped_rows() {
         // Arrange
@@ -71,6 +77,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Handles activate order true when draft with items.
+     */
     @IsTest
     static void canActivateOrder_true_when_draft_with_items() {
         // Arrange: canActivateOrder checks dependency.getOrderWithItems + getOrderItemsByOrder
@@ -90,6 +99,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Handles activate order false when activated.
+     */
     @IsTest
     static void canActivateOrder_false_when_activated() {
         // Arrange: already Activated → false
@@ -109,6 +121,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Activates order calls service and returns message.
+     */
     @IsTest
     static void activateOrder_calls_service_and_returns_message() {
         // Arrange: capture the call through the kit (dependency.activateOrder)
@@ -129,6 +144,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Gets order status returns status or null.
+     */
     @IsTest
     static void getOrderStatus_returns_status_or_null() {
         // Arrange
@@ -150,6 +168,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Updates order item quantities updates and returns message.
+     */
     @IsTest
     static void updateOrderItemQuantities_updates_and_returns_message() {
         // Arrange: Service will read via dependency.getOrderItemsByIds and then call updateOrderItems.
@@ -176,6 +197,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Updates order item quantities throws when service throws.
+     */
     @IsTest
     static void updateOrderItemQuantities_throws_when_service_throws() {
         // Arrange: Service throws when no items found (our kit returns empty for itemsById)
@@ -197,6 +221,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Gets order items paginated returns paginated results.
+     */
     @IsTest
     static void getOrderItemsPaginated_returns_paginated_results() {
         // Arrange
@@ -232,6 +259,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Gets order items paginated has more false when no more items.
+     */
     @IsTest
     static void getOrderItemsPaginated_hasMore_false_when_no_more_items() {
         // Arrange: Last page scenario
@@ -258,6 +288,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Deletes order items calls service and returns message.
+     */
     @IsTest
     static void deleteOrderItems_calls_service_and_returns_message() {
         // Arrange
@@ -287,6 +320,9 @@ private class OrderProductsControllerTest {
         } finally { scope.close(); }
     }
 
+    /**
+     * Deletes order items throws when service throws.
+     */
     @IsTest
     static void deleteOrderItems_throws_when_service_throws() {
         // Arrange: Service throws when no items found (itemsById is empty)

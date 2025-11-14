@@ -1,10 +1,27 @@
 @RestResource(urlMapping='/orders/*')
+/**
+ * REST resource that provisions orders and associated order items from HTTP clients.
+ */
 global with sharing class OrderRestResource {
     
+    /**
+     * Provides convenient access to the shared dependency provider.
+     *
+     * @return ApplicationDependencyProvider used by the API.
+     */
     private static ApplicationDependencyProvider dependencies() {
         return ApplicationDependencyContext.getProvider();
     }
     
+    /**
+     * Creates an order and adds order items based on the JSON body.
+     * Expected shape:
+     * {
+     *   \"accountId\": \"001...\", 
+     *   \"pricebookId\": \"01s...\", 
+     *   \"productIdToQuantity\": { \"01t...\": 2 }
+     * }
+     */
     @HttpPost
     global static void createOrder() {
         RestRequest req = RestContext.request;
@@ -120,6 +137,12 @@ global with sharing class OrderRestResource {
         global List<OrderItemResponse> orderItems { get; set; }
         global String message { get; set; }
         
+        /**
+         * Builds a response payload summarizing the newly created order.
+         *
+         * @param order created order.
+         * @param items order items added to the order.
+         */
         public OrderResponse(Order order, List<OrderItem> items) {
             this.orderId = order.Id;
             this.itemsAdded = items.size();
@@ -140,6 +163,11 @@ global with sharing class OrderRestResource {
         global Decimal unitPrice { get; set; }
         global Decimal totalPrice { get; set; }
         
+        /**
+         * Converts an OrderItem into the response representation.
+         *
+         * @param item source order item.
+         */
         public OrderItemResponse(OrderItem item) {
             this.id = item.Id;
             this.orderId = item.OrderId;
@@ -153,6 +181,11 @@ global with sharing class OrderRestResource {
     global class ErrorResponse {
         global String error { get; set; }
         
+        /**
+         * Represents a simple error payload returned by the API.
+         *
+         * @param errorMessage description of the failure.
+         */
         public ErrorResponse(String errorMessage) {
             this.error = errorMessage;
         }

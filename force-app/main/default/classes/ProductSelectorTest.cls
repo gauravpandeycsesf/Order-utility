@@ -1,6 +1,12 @@
 @IsTest
+/**
+ * Test coverage for Product Selector.
+ */
 private class ProductSelectorTest {
 
+    /**
+     * Verifies get sobject type.
+     */
     @IsTest
     static void testGetSObjectType() {
         Test.startTest();
@@ -11,6 +17,9 @@ private class ProductSelectorTest {
         System.assertEquals(Product2.SObjectType, result, 'Should return Product2 SObjectType');
     }
 
+    /**
+     * Verifies get sobject field list.
+     */
     @IsTest
     static void testGetSObjectFieldList() {
         Test.startTest();
@@ -29,6 +38,9 @@ private class ProductSelectorTest {
         System.assert(fields.contains(Product2.Parent_Product__c), 'Should contain Parent_Product__c field');
     }
 
+    /**
+     * Verifies get order products empty set.
+     */
     @IsTest
     static void testGetOrderProducts_EmptySet() {
         Test.startTest();
@@ -39,6 +51,9 @@ private class ProductSelectorTest {
         System.assertEquals(0, result.size(), 'Should return empty list for empty set');
     }
 
+    /**
+     * Verifies get order products null set.
+     */
     @IsTest
     static void testGetOrderProducts_NullSet() {
         Test.startTest();
@@ -49,6 +64,9 @@ private class ProductSelectorTest {
         System.assertEquals(0, result.size(), 'Should return empty list for null set');
     }
 
+    /**
+     * Verifies get products by name null pricebook id.
+     */
     @IsTest
     static void testGetProductsByName_NullPricebookId() {
         Test.startTest();
@@ -63,6 +81,9 @@ private class ProductSelectorTest {
         Test.stopTest();
     }
 
+    /**
+     * Verifies get products by name with product name.
+     */
     @IsTest
     static void testGetProductsByName_WithProductName() {
         Id pricebookId = (Id) '01s000000000001AAA';
@@ -76,6 +97,9 @@ private class ProductSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list when no matching products exist');
     }
 
+    /**
+     * Verifies get products by name without product name.
+     */
     @IsTest
     static void testGetProductsByName_WithoutProductName() {
         Id pricebookId = (Id) '01s000000000002AAA';

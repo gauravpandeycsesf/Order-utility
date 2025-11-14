@@ -5,6 +5,9 @@
 @isTest
 private class OrderItemSelectorTest {
 
+    /**
+     * Verifies get sobject type.
+     */
     @IsTest
     static void testGetSObjectType() {
         Test.startTest();
@@ -15,6 +18,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(OrderItem.SObjectType, result, 'Should return OrderItem SObjectType');
     }
 
+    /**
+     * Verifies get sobject field list.
+     */
     @IsTest
     static void testGetSObjectFieldList() {
         Test.startTest();
@@ -32,6 +38,9 @@ private class OrderItemSelectorTest {
         System.assert(fields.contains(OrderItem.TotalPrice), 'Should contain TotalPrice field');
     }
 
+    /**
+     * Verifies get sobject name.
+     */
     @IsTest
     static void testGetSObjectName() {
         Test.startTest();
@@ -42,6 +51,9 @@ private class OrderItemSelectorTest {
         System.assertEquals('OrderItem', result, 'Should return OrderItem as SObject name');
     }
 
+    /**
+     * Verifies get field list string.
+     */
     @IsTest
     static void testGetFieldListString() {
         Test.startTest();
@@ -54,6 +66,9 @@ private class OrderItemSelectorTest {
         System.assert(result.contains('Quantity'), 'Should contain Quantity field');
     }
 
+    /**
+     * Verifies get order items by order no items.
+     */
     @IsTest
     static void testGetOrderItemsByOrder_NoItems() {
         Test.startTest();
@@ -64,6 +79,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for order with no items');
     }
 
+    /**
+     * Verifies get order item by order and product not found.
+     */
     @IsTest
     static void testGetOrderItemByOrderAndProduct_NotFound() {
         Test.startTest();
@@ -77,6 +95,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(null, result, 'Should return null for non-existent order item');
     }
 
+    /**
+     * Verifies get order item by order and product coverage.
+     */
     @IsTest
     static void testGetOrderItemByOrderAndProduct_Coverage() {
         // Test method execution path for coverage (without inserting data)
@@ -102,6 +123,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(null, result2, 'Should return null for non-existent order item');
     }
 
+    /**
+     * Verifies get order items by ids empty list.
+     */
     @IsTest
     static void testGetOrderItemsByIds_EmptyList() {
         Test.startTest();
@@ -112,6 +136,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for empty input');
     }
 
+    /**
+     * Verifies get order items by ids null list.
+     */
     @IsTest
     static void testGetOrderItemsByIds_NullList() {
         Test.startTest();
@@ -122,6 +149,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for null input');
     }
 
+    /**
+     * Verifies get product ids in order no items.
+     */
     @IsTest
     static void testGetProductIdsInOrder_NoItems() {
         Test.startTest();
@@ -132,6 +162,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, productIds.size(), 'Should return empty set for order with no items');
     }
 
+    /**
+     * Verifies get product quantities in order no items.
+     */
     @IsTest
     static void testGetProductQuantitiesInOrder_NoItems() {
         Test.startTest();
@@ -142,6 +175,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, productQuantities.size(), 'Should return empty map for order with no items');
     }
 
+    /**
+     * Verifies get order items by order paginated no items.
+     */
     @IsTest
     static void testGetOrderItemsByOrderPaginated_NoItems() {
         Test.startTest();
@@ -152,6 +188,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for order with no items');
     }
 
+    /**
+     * Verifies get order items count no items.
+     */
     @IsTest
     static void testGetOrderItemsCount_NoItems() {
         Test.startTest();
@@ -162,6 +201,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, count, 'Should return count of 0 for order with no items');
     }
 
+    /**
+     * Verifies select sobjects by id empty set.
+     */
     @IsTest
     static void testSelectSObjectsById_EmptySet() {
         Test.startTest();
@@ -172,6 +214,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for empty set');
     }
 
+    /**
+     * Verifies select sobjects by id null set.
+     */
     @IsTest
     static void testSelectSObjectsById_NullSet() {
         Test.startTest();
@@ -182,6 +227,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for null set');
     }
 
+    /**
+     * Verifies select sobject by id not found.
+     */
     @IsTest
     static void testSelectSObjectById_NotFound() {
         Test.startTest();
@@ -192,6 +240,9 @@ private class OrderItemSelectorTest {
         System.assertEquals(null, result, 'Should return null for non-existent order item');
     }
 
+    /**
+     * Verifies select sobjects where no where clause.
+     */
     @IsTest
     static void testSelectSObjectsWhere_NoWhereClause() {
         Test.startTest();
@@ -202,6 +253,9 @@ private class OrderItemSelectorTest {
         System.assertNotEquals(null, results, 'Results should not be null');
     }
 
+    /**
+     * Verifies select sobjects where with order by.
+     */
     @IsTest
     static void testSelectSObjectsWhere_WithOrderBy() {
         Test.startTest();

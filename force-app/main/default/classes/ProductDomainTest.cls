@@ -1,10 +1,19 @@
 @IsTest
+/**
+ * Test coverage for Product Domain.
+ */
 private class ProductDomainTest {
 
+    /**
+     * Handles prod.
+     */
     private static Product2 prod(String id18, String code, String name) {
         return ApplicationDependencyTestKit.p(id18, code, name);
     }
 
+    /**
+     * Verifies on before insert validation success.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_Success() {
         Product2 newProduct = new Product2(
@@ -24,6 +33,9 @@ private class ProductDomainTest {
         System.assertEquals(true, insertedProduct.IsActive, 'Product should be active');
     }
 
+    /**
+     * Verifies on before insert validation blank name.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_BlankName() {
         Product2 newProduct = new Product2(
@@ -43,6 +55,9 @@ private class ProductDomainTest {
         System.assert(result.getErrors().size() > 0, 'Should have validation errors');
     }
 
+    /**
+     * Verifies on before insert validation whitespace name.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_WhitespaceName() {
         Product2 newProduct = new Product2(
@@ -62,6 +77,9 @@ private class ProductDomainTest {
         System.assert(result.getErrors().size() > 0, 'Should have validation errors');
     }
 
+    /**
+     * Verifies on before update validation success.
+     */
     @IsTest
     static void testOnBeforeUpdate_Validation_Success() {
         Product2 testProduct = new Product2(
@@ -83,6 +101,9 @@ private class ProductDomainTest {
         System.assertEquals('Updated Description', updatedProduct.Description, 'Description should be updated');
     }
 
+    /**
+     * Verifies on before update validation blank name.
+     */
     @IsTest
     static void testOnBeforeUpdate_Validation_BlankName() {
         Product2 testProduct = new Product2(
@@ -105,6 +126,9 @@ private class ProductDomainTest {
         System.assert(result.getErrors().size() > 0, 'Should have validation errors');
     }
 
+    /**
+     * Verifies get products by pricebook success.
+     */
     @IsTest
     static void testGetProductsByPricebook_Success() {
         Id pricebookId = (Id) '01s000000000001AAA';
@@ -133,6 +157,9 @@ private class ProductDomainTest {
         }
     }
 
+    /**
+     * Verifies get products by pricebook empty pricebook.
+     */
     @IsTest
     static void testGetProductsByPricebook_EmptyPricebook() {
         Id pricebookId = (Id) '01s000000000002AAA';
@@ -155,6 +182,9 @@ private class ProductDomainTest {
         }
     }
 
+    /**
+     * Verifies get available products for order success.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_Success() {
         Id pricebookId = (Id) '01s000000000003AAA';
@@ -185,6 +215,9 @@ private class ProductDomainTest {
         }
     }
 
+    /**
+     * Verifies get available products for order empty order.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_EmptyOrder() {
         Id pricebookId = (Id) '01s000000000004AAA';
@@ -213,6 +246,9 @@ private class ProductDomainTest {
         }
     }
 
+    /**
+     * Verifies get available products for order null product ids.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_NullProductIds() {
         Id pricebookId = (Id) '01s000000000005AAA';
@@ -241,6 +277,9 @@ private class ProductDomainTest {
         }
     }
 
+    /**
+     * Verifies get available products for order all products in order.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_AllProductsInOrder() {
         Id pricebookId = (Id) '01s000000000006AAA';
@@ -271,6 +310,9 @@ private class ProductDomainTest {
         }
     }
 
+    /**
+     * Verifies get available products for order invalid pricebook id.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_InvalidPricebookId() {
         Id invalidPricebookId = (Id) '01s000000000099AAA';

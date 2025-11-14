@@ -1,6 +1,12 @@
 @IsTest
+/**
+ * Test coverage for Order Domain.
+ */
 private class OrderDomainTest {
 
+    /**
+     * Creates order.
+     */
     private static Order makeOrder(Id idVal, Id pricebookId, Id accountId) {
         Order o = new Order();
         o.Id = idVal;
@@ -11,6 +17,9 @@ private class OrderDomainTest {
         return o;
     }
 
+    /**
+     * Verifies on before insert validation success.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_Success() {
         Id accountId = (Id) '001000000000001AAA';
@@ -34,6 +43,9 @@ private class OrderDomainTest {
         System.assertEquals('Draft', newOrder.Status, 'Status should be Draft');
     }
 
+    /**
+     * Verifies on before insert validation no account.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_NoAccount() {
         Id pricebookId = (Id) '01s000000000002AAA';
@@ -53,6 +65,9 @@ private class OrderDomainTest {
         System.assert(newOrder.hasErrors(), 'Order should have validation errors');
     }
 
+    /**
+     * Verifies on before insert validation no effective date.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_NoEffectiveDate() {
         Id accountId = (Id) '001000000000002AAA';
@@ -74,6 +89,9 @@ private class OrderDomainTest {
         System.assertEquals(Date.today(), newOrder.EffectiveDate, 'Domain class should set EffectiveDate to today');
     }
 
+    /**
+     * Verifies on before update validation.
+     */
     @IsTest
     static void testOnBeforeUpdate_Validation() {
         Id accountId = (Id) '001000000000003AAA';
@@ -94,6 +112,9 @@ private class OrderDomainTest {
     }
 
 
+    /**
+     * Verifies on before insert set default effective date.
+     */
     @IsTest
     static void testOnBeforeInsert_SetDefaultEffectiveDate() {
         Id accountId = (Id) '001000000000007AAA';
@@ -115,6 +136,9 @@ private class OrderDomainTest {
         System.assertEquals(Date.today(), newOrder.EffectiveDate, 'Domain class should set EffectiveDate to today');
     }
 
+    /**
+     * Verifies activate order success.
+     */
     @IsTest
     static void testActivateOrder_Success() {
         Id orderId = (Id) '801000000000001AAA';
@@ -141,6 +165,9 @@ private class OrderDomainTest {
         }
     }
 
+    /**
+     * Verifies activate order already activated.
+     */
     @IsTest
     static void testActivateOrder_AlreadyActivated() {
         Id orderId = (Id) '801000000000002AAA';
@@ -167,6 +194,9 @@ private class OrderDomainTest {
         }
     }
 
+    /**
+     * Verifies activate order invalid order id.
+     */
     @IsTest
     static void testActivateOrder_InvalidOrderId() {
         Id invalidOrderId = (Id) '801000000000999AAA';
