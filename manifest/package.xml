@@ -29,7 +29,7 @@
     </types>
 
     <types>
-        <members>admin</members>
+        <members>*</members>
         <name>Profile</name>
     </types>
 
