@@ -244,15 +244,60 @@ export default class AvailableProducts extends LightningElement {
     }
 
     handleProductSelection(event) {
+        const actionName = event?.detail?.config?.action;
+        const normalizedAction = typeof actionName === 'string' ? actionName.toLowerCase() : null;
+        const isSelectionAction = normalizedAction === 'rowselect' || normalizedAction === 'rowdeselect';
         const selectedRows = event.detail.selectedRows || [];
         const previousValidSelection = [...(this.selectedProducts || [])];
+        
+        if (!isSelectionAction) {
+            // Collapse/expand events reset the selection in the tree grid UI,
+            // but we want to preserve the previously chosen child products.
+            // Re-apply the selection asynchronously and exit early.
+            // eslint-disable-next-line @lwc/lwc/no-async-operation
+            Promise.resolve().then(() => {
+                this.updateTreeGridSelection();
+            });
+            return;
+        }
         
         const childProducts = selectedRows.filter(row => {
             const productId = row.productId || row.id;
             return productId && !String(productId).startsWith('parent_');
         });
-        
-        if (this.hasMultipleChildrenFromSameParent(childProducts)) {
+        const previousSelectionMap = new Map();
+        previousValidSelection.forEach(product => {
+            const productId = product.productId || product.id;
+            if (productId) {
+                previousSelectionMap.set(productId, product);
+            }
+        });
+        const eventSelectionMap = new Map();
+        childProducts.forEach(product => {
+            const productId = product.productId || product.id;
+            if (productId) {
+                eventSelectionMap.set(productId, product);
+            }
+        });
+        const combinedSelectionMap = new Map(previousSelectionMap);
+        eventSelectionMap.forEach((product, productId) => {
+            combinedSelectionMap.set(productId, product);
+        });
+        if (normalizedAction === 'rowdeselect') {
+            let deselectedProductId = event?.detail?.config?.value;
+            if (!deselectedProductId) {
+                previousSelectionMap.forEach((value, productId) => {
+                    if (!eventSelectionMap.has(productId) && !deselectedProductId) {
+                        deselectedProductId = productId;
+                    }
+                });
+            }
+            if (deselectedProductId) {
+                combinedSelectionMap.delete(deselectedProductId);
+            }
+        }
+        const resolvedSelection = Array.from(combinedSelectionMap.values());
+        if (this.hasMultipleChildrenFromSameParent(resolvedSelection)) {
             this.showToast(
                 'Error', 
                 'You can select only one child product per parent. Please deselect one of the products from the same parent.', 
@@ -266,7 +311,7 @@ export default class AvailableProducts extends LightningElement {
                 this.updateTreeGridSelection();
             });
         } else {
-            this.selectedProducts = childProducts;
+            this.selectedProducts = resolvedSelection;
         }
     }
     
