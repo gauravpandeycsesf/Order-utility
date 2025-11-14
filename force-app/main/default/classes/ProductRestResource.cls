@@ -36,12 +36,12 @@ global with sharing class ProductRestResource {
             
             AvailableProductsController.AvailableProductsRequest request = new AvailableProductsController.AvailableProductsRequest();
             request.pricebookId = Id.valueOf(pricebookId);
-            request.productName = productName;
+            request.parentName = productName;
             
             List<AvailableProductsController.ProductTreeNode> treeNodes = AvailableProductsController.getAvailableProducts(request);
             
             res.statusCode = 200;
-            res.responseBody = Blob.valueOf(JSON.serialize(treeNodes));
+            res.responseBody = Blob.valueOf(JSON.serialize(treeNodes,true));
             
         } catch (Exception e) {
             res.statusCode = 500;
