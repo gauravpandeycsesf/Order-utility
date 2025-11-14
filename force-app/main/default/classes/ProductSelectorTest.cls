@@ -62,4 +62,30 @@ private class ProductSelectorTest {
         }
         Test.stopTest();
     }
+
+    @IsTest
+    static void testGetProductsByName_WithProductName() {
+        Id pricebookId = (Id) '01s000000000001AAA';
+
+        Test.startTest();
+        ProductSelector selector = new ProductSelector();
+        List<Product2> results = selector.getProductsByName('Widget', pricebookId);
+        Test.stopTest();
+
+        System.assertNotEquals(null, results, 'Results should not be null even when no data exists');
+        System.assertEquals(0, results.size(), 'Should return empty list when no matching products exist');
+    }
+
+    @IsTest
+    static void testGetProductsByName_WithoutProductName() {
+        Id pricebookId = (Id) '01s000000000002AAA';
+
+        Test.startTest();
+        ProductSelector selector = new ProductSelector();
+        List<Product2> results = selector.getProductsByName(null, pricebookId);
+        Test.stopTest();
+
+        System.assertNotEquals(null, results, 'Results should not be null even when no data exists');
+        System.assertEquals(0, results.size(), 'Should return empty list when pricebook has no products');
+    }
 }

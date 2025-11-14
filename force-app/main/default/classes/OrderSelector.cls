@@ -28,12 +28,4 @@ public with sharing class OrderSelector extends SObjectSelector {
         List<Order> orders = Database.query(query);
         return orders.isEmpty() ? null : orders[0];
     }
-    
-    public List<Order> getOrdersByAccount(Id accountId) {
-        return selectSObjectsWhere('AccountId = :accountId', 'CreatedDate DESC');
-    }
-    
-    public List<Order> getOrdersByStatus(String status) {
-        return selectSObjectsWhere('Status = :status', 'CreatedDate DESC');
-    }
 }
