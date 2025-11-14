@@ -1,4 +1,7 @@
 @IsTest
+/**
+ * Test coverage for Product Rest Resource.
+ */
 private class ProductRestResourceTest {
 
     private static Product2 prodJson(
@@ -13,6 +16,9 @@ private class ProductRestResourceTest {
         return prod;
     }
 
+    /**
+     * Sets rest context.
+     */
     private static void setRestContext(String nameParam, String pricebookParam) {
         RestRequest req = new RestRequest();
         req.requestUri = '/services/apexrest/products';
@@ -25,14 +31,23 @@ private class ProductRestResourceTest {
         RestContext.response = res;
     }
 
+    /**
+     * Handles list body.
+     */
     private static List<Object> parseListBody() {
         return (List<Object>) JSON.deserializeUntyped(RestContext.response.responseBody.toString());
     }
 
+    /**
+     * Handles map body.
+     */
     private static Map<String, Object> parseMapBody() {
         return (Map<String, Object>) JSON.deserializeUntyped(RestContext.response.responseBody.toString());
     }
 
+    /**
+     * Verifies get products by name success.
+     */
     @IsTest
     static void testGetProductsByName_Success() {
         Id pbId = (Id) '01s000000000001AAA';
@@ -61,6 +76,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name with pricebook id.
+     */
     @IsTest
     static void testGetProductsByName_WithPricebookId() {
         Id pbId = (Id) '01s000000000001AAA';
@@ -93,6 +111,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name partial match.
+     */
     @IsTest
     static void testGetProductsByName_PartialMatch() {
         Id pbId = (Id) '01s000000000001AAA';
@@ -121,6 +142,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name no match.
+     */
     @IsTest
     static void testGetProductsByName_NoMatch() {
         Id pbId = (Id) '01s000000000001AAA';
@@ -144,6 +168,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name missing pricebook id parameter.
+     */
     @IsTest
     static void testGetProductsByName_MissingPricebookIdParameter() {
         setRestContext('Test Product', null);
@@ -165,6 +192,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name without name parameter.
+     */
     @IsTest
     static void testGetProductsByName_WithoutNameParameter() {
         Id pbId = (Id) '01s000000000001AAA';
@@ -195,6 +225,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name empty name parameter.
+     */
     @IsTest
     static void testGetProductsByName_EmptyNameParameter() {
         Id pbId = (Id) '01s000000000001AAA';
@@ -225,6 +258,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name excludes inactive products.
+     */
     @IsTest
     static void testGetProductsByName_ExcludesInactiveProducts() {
         Id pbId = (Id) '01s000000000001AAA';
@@ -263,6 +299,9 @@ private class ProductRestResourceTest {
         }
     }
 
+    /**
+     * Verifies get products by name 500 on exception.
+     */
     @IsTest
     static void testGetProductsByName_500_on_exception() {
         Id pbId = (Id) '01s000000000009AAA';

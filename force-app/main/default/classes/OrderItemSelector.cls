@@ -1,9 +1,22 @@
+/**
+ * Selector that centralizes SOQL used to retrieve order item data.
+ */
 public with sharing class OrderItemSelector extends SObjectSelector {
     
+    /**
+     * Identifies the SObject type handled by the selector.
+     *
+     * @return Schema.SObjectType for OrderItem.
+     */
     public override Schema.SObjectType getSObjectType() {
         return OrderItem.SObjectType;
     }
     
+    /**
+     * Lists the fields that should be queried when retrieving order items.
+     *
+     * @return ordered list of fields used in SOQL statements.
+     */
     public override List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
             OrderItem.Id,
@@ -17,6 +30,12 @@ public with sharing class OrderItemSelector extends SObjectSelector {
         };
     }
     
+    /**
+     * Retrieves all order items for a given order, including related product names.
+     *
+     * @param orderId order whose items should be returned.
+     * @return list of OrderItem records.
+     */
     public List<OrderItem> getOrderItemsByOrder(Id orderId) {
         String query = 'SELECT ' + getFieldListString() + 
                       ', Product2.Name' +
@@ -28,6 +47,13 @@ public with sharing class OrderItemSelector extends SObjectSelector {
         return Database.query(query);
     }
     
+    /**
+     * Retrieves the order item for a specific product within an order.
+     *
+     * @param orderId order identifier.
+     * @param productId product identifier.
+     * @return matching OrderItem or null if none exists.
+     */
     public OrderItem getOrderItemByOrderAndProduct(Id orderId, Id productId) {
         String query = 'SELECT ' + getFieldListString() + 
                       ', Product2.Name' +
@@ -39,6 +65,12 @@ public with sharing class OrderItemSelector extends SObjectSelector {
         return orderItems.isEmpty() ? null : orderItems[0];
     }
     
+    /**
+     * Loads order items by their ids while guarding against null or empty input.
+     *
+     * @param orderItemIds collection of order item ids.
+     * @return list of OrderItems for the ids.
+     */
     public List<OrderItem> getOrderItemsByIds(List<Id> orderItemIds) {
         if (orderItemIds == null || orderItemIds.isEmpty()) {
             return new List<OrderItem>();
@@ -49,6 +81,12 @@ public with sharing class OrderItemSelector extends SObjectSelector {
         return (List<OrderItem>) records;
     }
     
+    /**
+     * Aggregates the set of product ids present on an order.
+     *
+     * @param orderId order identifier.
+     * @return set of Product2 ids.
+     */
     public Set<Id> getProductIdsInOrder(Id orderId) {
         List<OrderItem> orderItems = getOrderItemsByOrder(orderId);
         Set<Id> productIds = new Set<Id>();
@@ -60,6 +98,12 @@ public with sharing class OrderItemSelector extends SObjectSelector {
         return productIds;
     }
     
+    /**
+     * Builds a map of product id to total quantity for the specified order.
+     *
+     * @param orderId order identifier.
+     * @return Map<Product2Id, Decimal quantity>.
+     */
     public Map<Id, Decimal> getProductQuantitiesInOrder(Id orderId) {
         List<OrderItem> orderItems = getOrderItemsByOrder(orderId);
         Map<Id, Decimal> productQuantities = new Map<Id, Decimal>();
@@ -75,6 +119,14 @@ public with sharing class OrderItemSelector extends SObjectSelector {
         return productQuantities;
     }
     
+    /**
+     * Retrieves order items for an order with pagination support.
+     *
+     * @param orderId order identifier.
+     * @param offset number of rows to skip.
+     * @param pageSize number of rows to return.
+     * @return list of paginated OrderItems.
+     */
     public List<OrderItem> getOrderItemsByOrderPaginated(Id orderId, Integer offset, Integer pageSize) {
         String query = 'SELECT ' + getFieldListString() + 
                       ', Product2.Name' +
@@ -88,6 +140,12 @@ public with sharing class OrderItemSelector extends SObjectSelector {
         return Database.query(query);
     }
     
+    /**
+     * Counts how many order items belong to the specified order.
+     *
+     * @param orderId order identifier.
+     * @return total number of OrderItems.
+     */
     public Integer getOrderItemsCount(Id orderId) {
         return Database.countQuery('SELECT COUNT() FROM ' + getSObjectName() + ' WHERE OrderId = :orderId');
     }

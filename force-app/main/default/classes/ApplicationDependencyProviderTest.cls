@@ -1,6 +1,12 @@
 @IsTest
+/**
+ * Test coverage for Application Dependency Provider.
+ */
 private class ApplicationDependencyProviderTest {
 
+    /**
+     * Creates order.
+     */
     private static Order makeOrder(Id idVal, Id pricebookId, Id accountId) {
         Order o = new Order();
         o.Id = idVal;
@@ -11,6 +17,9 @@ private class ApplicationDependencyProviderTest {
         return o;
     }
 
+    /**
+     * Verifies get order products empty set.
+     */
     @IsTest
     static void testGetOrderProducts_EmptySet() {
         Test.startTest();
@@ -21,6 +30,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for empty set');
     }
 
+    /**
+     * Verifies get order products null set.
+     */
     @IsTest
     static void testGetOrderProducts_NullSet() {
         Test.startTest();
@@ -31,6 +43,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for null set');
     }
 
+    /**
+     * Verifies get products by name null pricebook id.
+     */
     @IsTest
     static void testGetProductsByName_NullPricebookId() {
         Test.startTest();
@@ -45,6 +60,9 @@ private class ApplicationDependencyProviderTest {
         Test.stopTest();
     }
 
+    /**
+     * Verifies get available products for order.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder() {
         Id pricebookId = (Id) '01s000000000001AAA';
@@ -73,6 +91,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies query existing order items empty.
+     */
     @IsTest
     static void testQueryExistingOrderItems_Empty() {
         Id orderId = (Id) '801000000000001AAA';
@@ -87,6 +108,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for empty product IDs');
     }
 
+    /**
+     * Verifies query active pricebook entries empty.
+     */
     @IsTest
     static void testQueryActivePricebookEntries_Empty() {
         Id pricebookId = (Id) '01s000000000001AAA';
@@ -101,6 +125,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty map for empty product IDs');
     }
 
+    /**
+     * Verifies get order items for order empty.
+     */
     @IsTest
     static void testGetOrderItemsForOrder_Empty() {
         Id orderId = (Id) '801000000000001AAA';
@@ -114,6 +141,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for non-existent order');
     }
 
+    /**
+     * Verifies activate order null order.
+     */
     @IsTest
     static void testActivateOrder_NullOrder() {
         Id orderId = (Id) '801000000000001AAA';
@@ -136,6 +166,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies activate order already activated.
+     */
     @IsTest
     static void testActivateOrder_AlreadyActivated() {
         Id orderId = (Id) '801000000000001AAA';
@@ -161,6 +194,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies activate order success.
+     */
     @IsTest
     static void testActivateOrder_Success() {
         Id orderId = (Id) '801000000000001AAA';
@@ -186,6 +222,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get order with items.
+     */
     @IsTest
     static void testGetOrderWithItems() {
         Id orderId = (Id) '801000000000001AAA';
@@ -211,6 +250,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get product ids in order.
+     */
     @IsTest
     static void testGetProductIdsInOrder() {
         Id orderId = (Id) '801000000000001AAA';
@@ -236,6 +278,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get product quantities in order.
+     */
     @IsTest
     static void testGetProductQuantitiesInOrder() {
         Id orderId = (Id) '801000000000001AAA';
@@ -263,6 +308,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get products by name.
+     */
     @IsTest
     static void testGetProductsByName() {
         Id pricebookId = (Id) '01s000000000001AAA';
@@ -291,6 +339,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get order products.
+     */
     @IsTest
     static void testGetOrderProducts() {
         Id productId1 = (Id) '01t000000000001AAA';
@@ -318,6 +369,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get order items by order.
+     */
     @IsTest
     static void testGetOrderItemsByOrder() {
         Id orderId = (Id) '801000000000001AAA';
@@ -346,6 +400,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get order items by order paginated.
+     */
     @IsTest
     static void testGetOrderItemsByOrderPaginated() {
         Id orderId = (Id) '801000000000001AAA';
@@ -374,6 +431,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get order items count.
+     */
     @IsTest
     static void testGetOrderItemsCount() {
         Id orderId = (Id) '801000000000001AAA';
@@ -397,6 +457,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get order items by ids.
+     */
     @IsTest
     static void testGetOrderItemsByIds() {
         Id orderItemId1 = (Id) '802000000000001AAA';
@@ -425,6 +488,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies get order items for order.
+     */
     @IsTest
     static void testGetOrderItemsForOrder() {
         Id orderId = (Id) '801000000000001AAA';
@@ -453,6 +519,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies query existing order items.
+     */
     @IsTest
     static void testQueryExistingOrderItems() {
         Id orderId = (Id) '801000000000001AAA';
@@ -481,6 +550,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies query active pricebook entries.
+     */
     @IsTest
     static void testQueryActivePricebookEntries() {
         Id pricebookId = (Id) '01s000000000001AAA';
@@ -510,6 +582,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies insert order items.
+     */
     @IsTest
     static void testInsertOrderItems() {
         Id orderItemId1 = (Id) '802000000000001AAA';
@@ -535,6 +610,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies update order items.
+     */
     @IsTest
     static void testUpdateOrderItems() {
         Id orderItemId1 = (Id) '802000000000001AAA';
@@ -560,6 +638,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies update order.
+     */
     @IsTest
     static void testUpdateOrder() {
         Id orderId = (Id) '801000000000001AAA';
@@ -588,6 +669,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies insert order.
+     */
     @IsTest
     static void testInsertOrder() {
         Id orderId = (Id) '801000000000001AAA';
@@ -615,6 +699,9 @@ private class ApplicationDependencyProviderTest {
         }
     }
 
+    /**
+     * Verifies delete order items.
+     */
     @IsTest
     static void testDeleteOrderItems() {
         Id orderItemId1 = (Id) '802000000000001AAA';
@@ -640,6 +727,9 @@ private class ApplicationDependencyProviderTest {
     // Integration tests to cover ApplicationDependencyProvider methods directly
     // These call the real provider methods (not stubbed) to get code coverage
 
+    /**
+     * Verifies get order with items direct coverage.
+     */
     @IsTest
     static void testGetOrderWithItems_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -653,6 +743,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(null, result, 'Should return null for non-existent order');
     }
 
+    /**
+     * Verifies get product ids in order direct coverage.
+     */
     @IsTest
     static void testGetProductIdsInOrder_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -666,6 +759,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty set for non-existent order');
     }
 
+    /**
+     * Verifies get product quantities in order direct coverage.
+     */
     @IsTest
     static void testGetProductQuantitiesInOrder_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -679,6 +775,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty map for non-existent order');
     }
 
+    /**
+     * Verifies get available products for order direct coverage.
+     */
     @IsTest
     static void testGetAvailableProductsForOrder_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -692,6 +791,9 @@ private class ApplicationDependencyProviderTest {
         System.assertNotEquals(null, result, 'Result should not be null');
     }
 
+    /**
+     * Verifies get order items by order direct coverage.
+     */
     @IsTest
     static void testGetOrderItemsByOrder_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -705,6 +807,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for non-existent order');
     }
 
+    /**
+     * Verifies get order items by order paginated direct coverage.
+     */
     @IsTest
     static void testGetOrderItemsByOrderPaginated_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -718,6 +823,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for non-existent order');
     }
 
+    /**
+     * Verifies get order items count direct coverage.
+     */
     @IsTest
     static void testGetOrderItemsCount_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -731,6 +839,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result, 'Should return 0 for non-existent order');
     }
 
+    /**
+     * Verifies get order items by ids direct coverage.
+     */
     @IsTest
     static void testGetOrderItemsByIds_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -745,6 +856,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for non-existent items');
     }
 
+    /**
+     * Verifies query existing order items direct coverage.
+     */
     @IsTest
     static void testQueryExistingOrderItems_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -759,6 +873,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty list for empty product IDs');
     }
 
+    /**
+     * Verifies query active pricebook entries direct coverage.
+     */
     @IsTest
     static void testQueryActivePricebookEntries_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -773,6 +890,9 @@ private class ApplicationDependencyProviderTest {
         System.assertEquals(0, result.size(), 'Should return empty map for empty product IDs');
     }
 
+    /**
+     * Verifies insert order items direct coverage.
+     */
     @IsTest
     static void testInsertOrderItems_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -791,6 +911,9 @@ private class ApplicationDependencyProviderTest {
         Test.stopTest();
     }
 
+    /**
+     * Verifies update order items direct coverage.
+     */
     @IsTest
     static void testUpdateOrderItems_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -808,6 +931,9 @@ private class ApplicationDependencyProviderTest {
         Test.stopTest();
     }
 
+    /**
+     * Verifies delete order items direct coverage.
+     */
     @IsTest
     static void testDeleteOrderItems_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -822,6 +948,9 @@ private class ApplicationDependencyProviderTest {
         System.assert(true, 'Method executed successfully');
     }
 
+    /**
+     * Verifies delete order items null list direct coverage.
+     */
     @IsTest
     static void testDeleteOrderItems_NullList_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -834,6 +963,9 @@ private class ApplicationDependencyProviderTest {
         System.assert(true, 'Method executed successfully with null');
     }
 
+    /**
+     * Verifies delete order items empty list direct coverage.
+     */
     @IsTest
     static void testDeleteOrderItems_EmptyList_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -846,6 +978,9 @@ private class ApplicationDependencyProviderTest {
         System.assert(true, 'Method executed successfully with empty list');
     }
 
+    /**
+     * Verifies update order direct coverage.
+     */
     @IsTest
     static void testUpdateOrder_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -862,6 +997,9 @@ private class ApplicationDependencyProviderTest {
         Test.stopTest();
     }
 
+    /**
+     * Verifies insert order direct coverage.
+     */
     @IsTest
     static void testInsertOrder_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -878,6 +1016,9 @@ private class ApplicationDependencyProviderTest {
         Test.stopTest();
     }
 
+    /**
+     * Verifies activate order direct coverage.
+     */
     @IsTest
     static void testActivateOrder_DirectCoverage() {
         ApplicationDependencyProvider provider = new ApplicationDependencyProvider();
@@ -891,6 +1032,9 @@ private class ApplicationDependencyProviderTest {
         System.assert(true, 'Method executed successfully');
     }
 
+    /**
+     * Verifies reset provider.
+     */
     @IsTest
     static void testResetProvider() {
         // Create a custom provider

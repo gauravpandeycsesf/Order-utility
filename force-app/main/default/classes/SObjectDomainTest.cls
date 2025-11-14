@@ -1,4 +1,7 @@
 @IsTest
+/**
+ * Test coverage for SObject Domain.
+ */
 private class SObjectDomainTest {
 
     /**
@@ -34,6 +37,9 @@ private class SObjectDomainTest {
         public Map<Id, SObject> beforeUpdateRecords;
         public Map<Id, SObject> afterUpdateRecords;
 
+        /**
+         * Verifies domain.
+         */
         public TestDomain(List<SObject> records) {
             super(records);
         }
@@ -42,32 +48,53 @@ private class SObjectDomainTest {
             super(records, uow);
         }
 
+        /**
+         * Handles before insert.
+         */
         public override void onBeforeInsert() {
             beforeInsertCalled = true;
         }
 
+        /**
+         * Handles after insert.
+         */
         public override void onAfterInsert() {
             afterInsertCalled = true;
         }
 
+        /**
+         * Handles before update.
+         */
         public override void onBeforeUpdate(Map<Id, SObject> existingRecords) {
             beforeUpdateCalled = true;
             beforeUpdateRecords = existingRecords;
         }
 
+        /**
+         * Handles after update.
+         */
         public override void onAfterUpdate(Map<Id, SObject> existingRecords) {
             afterUpdateCalled = true;
             afterUpdateRecords = existingRecords;
         }
 
+        /**
+         * Handles before delete.
+         */
         public override void onBeforeDelete() {
             beforeDeleteCalled = true;
         }
 
+        /**
+         * Handles after delete.
+         */
         public override void onAfterDelete() {
             afterDeleteCalled = true;
         }
 
+        /**
+         * Handles undelete.
+         */
         public override void onUndelete() {
             undeleteCalled = true;
         }
@@ -78,11 +105,17 @@ private class SObjectDomainTest {
      * the base-class implementations are executed for coverage.
      */
     private class NoopDomain extends SObjectDomain {
+        /**
+         * Handles domain.
+         */
         public NoopDomain(List<SObject> records) {
             super(records);
         }
     }
 
+    /**
+     * Verifies lifecycle handlers delegate to hooks.
+     */
     @IsTest
     static void testLifecycleHandlersDelegateToHooks() {
         List<SObject> records = new List<SObject>{
@@ -118,6 +151,9 @@ private class SObjectDomainTest {
         System.assert(domain.undeleteCalled, 'handleUndelete should invoke onUndelete');
     }
 
+    /**
+     * Verifies constructor without unit of work.
+     */
     @IsTest
     static void testConstructorWithoutUnitOfWork() {
         List<SObject> records = new List<SObject>{
@@ -130,6 +166,9 @@ private class SObjectDomainTest {
         System.assertEquals(null, domain.Uow, 'UoW should remain null when not supplied');
     }
 
+    /**
+     * Verifies base lifecycle methods covered.
+     */
     @IsTest
     static void testBaseLifecycleMethodsCovered() {
         List<SObject> records = new List<SObject>{

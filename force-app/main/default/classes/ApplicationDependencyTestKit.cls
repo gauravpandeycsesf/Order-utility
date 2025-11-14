@@ -1,8 +1,14 @@
 @IsTest
+/**
+ * Utility test kit that provides lightweight stubs for ApplicationDependencyProvider.
+ */
 public class ApplicationDependencyTestKit {
     // =========================
     //  Data bucket for stubbing
     // =========================
+    /**
+     * Container that stores values returned by the stubbed dependency provider.
+     */
     public class Data {
         // IDs you might care about
         public Id orderId;
@@ -12,6 +18,7 @@ public class ApplicationDependencyTestKit {
         public Order  order;                                     // getOrderWithItems
         public Map<Id, Decimal> productQuantitiesInOrder =       // getProductQuantitiesInOrder
             new Map<Id, Decimal>();
+        // Values used when tests query for products by name
         public List<Product2>   productsByName = new List<Product2>(); // getProductsByName(String, Id)
 
         public Set<Id>   orderItemProductIds = new Set<Id>();    // getProductIdsInOrder
@@ -181,6 +188,12 @@ public class ApplicationDependencyTestKit {
     // ======================
     //  Factory & override API
     // ======================
+    /**
+     * Creates a stubbed ApplicationDependencyProvider backed by the supplied data.
+     *
+     * @param data data bucket that defines stub responses.
+     * @return provider stub used by tests.
+     */
     public static ApplicationDependencyProvider makeProvider(Data data) {
         return (ApplicationDependencyProvider) Test.createStub(
             ApplicationDependencyProvider.class,
@@ -193,6 +206,12 @@ public class ApplicationDependencyTestKit {
         Scope(ApplicationDependencyProvider o) { original = o; }
         public void close() { ApplicationDependencyContext.setProvider(original); }
     }
+    /**
+     * Overrides the provider in the dependency context for the duration of a test.
+     *
+     * @param fake stub to register.
+     * @return scope that restores the original provider when closed.
+     */
     public static Scope overrideProvider(ApplicationDependencyProvider fake) {
         ApplicationDependencyProvider original = ApplicationDependencyContext.getProvider();
         ApplicationDependencyContext.setProvider(fake);
@@ -203,6 +222,14 @@ public class ApplicationDependencyTestKit {
     //  Lightweight object makers
     //  (only writeable fields)
     // ==========================
+    /**
+     * Creates a simple Product2 with the provided identity, code, and name.
+     *
+     * @param id18 id to assign (optional).
+     * @param code product code.
+     * @param name product name.
+     * @return Product2 instance for tests.
+     */
     public static Product2 p(String id18, String code, String name) {
         Product2 x = new Product2();
         x.Id = (Id) id18;   // '01t...' recommended but not required
@@ -211,6 +238,13 @@ public class ApplicationDependencyTestKit {
         return x;
     }
 
+    /**
+     * Creates a PricebookEntry with basic writeable fields populated.
+     *
+     * @param id18 id to assign (optional).
+     * @param unit unit price value.
+     * @return PricebookEntry instance for tests.
+     */
     public static PricebookEntry pbe(String id18, Decimal unit) {
         PricebookEntry e = new PricebookEntry();
         e.Id = (Id) id18;   // '01u...' recommended but not required
@@ -221,6 +255,14 @@ public class ApplicationDependencyTestKit {
     }
 
     // Minimal OrderItem (avoid non-writeable fields like OrderId, Product2Id, PricebookEntryId)
+    /**
+     * Builds an OrderItem that only sets writeable fields for easy DML.
+     *
+     * @param id18 id to assign (optional).
+     * @param qty quantity value.
+     * @param unit unit price value.
+     * @return OrderItem ready for test inserts.
+     */
     public static OrderItem oi(String id18, Decimal qty, Decimal unit) {
         OrderItem o = new OrderItem();
         if (id18 != null) o.Id = (Id) id18;  // '802...' recommended but not required
@@ -232,6 +274,13 @@ public class ApplicationDependencyTestKit {
     /**
      * Build an "existing" OrderItem with read-only fields (e.g., Product2Id, PricebookEntryId)
      * via JSON to avoid writeability errors in tests. Use ONLY in tests—never in production code.
+     *
+     * @param id18 id to assign (optional).
+     * @param product2Id related product id.
+     * @param pbeId related pricebook entry id.
+     * @param qty quantity value.
+     * @param unit unit price value.
+     * @return deserialized OrderItem with read-only fields populated.
      */
     public static OrderItem oiJson(String id18, Id product2Id, Id pbeId, Decimal qty, Decimal unit) {
         Map<String, Object> m = new Map<String, Object>{

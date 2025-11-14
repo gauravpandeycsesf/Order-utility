@@ -1,4 +1,7 @@
 @IsTest
+/**
+ * Test coverage for Order Rest Resource.
+ */
 private class OrderRestResourceTest {
 
     static final Id ACCOUNT_ID = (Id) '001000000000001AAA';
@@ -9,6 +12,9 @@ private class OrderRestResourceTest {
     static final Id PBE_A_ID = (Id) '01u000000000001AAA';
     static final Id PBE_B_ID = (Id) '01u000000000002AAA';
 
+    /**
+     * Verifies create order missing account id.
+     */
     @IsTest
     static void testCreateOrder_MissingAccountId() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -52,6 +58,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order missing pricebook id.
+     */
     @IsTest
     static void testCreateOrder_MissingPricebookId() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -95,6 +104,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order missing product id to quantity.
+     */
     @IsTest
     static void testCreateOrder_MissingProductIdToQuantity() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -135,6 +147,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order empty product id to quantity.
+     */
     @IsTest
     static void testCreateOrder_EmptyProductIdToQuantity() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -176,6 +191,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order empty request body.
+     */
     @IsTest
     static void testCreateOrder_EmptyRequestBody() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -212,6 +230,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order invalid id format.
+     */
     @IsTest
     static void testCreateOrder_InvalidIdFormat() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -260,6 +281,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order response wrapper.
+     */
     @IsTest
     static void testCreateOrder_ResponseWrapper() {
         Order testOrder = new Order();
@@ -314,6 +338,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order error response wrapper.
+     */
     @IsTest
     static void testCreateOrder_ErrorResponseWrapper() {
         Test.startTest();
@@ -324,6 +351,9 @@ private class OrderRestResourceTest {
         System.assertEquals('Test error message', errorResponse.error, 'Error message should match');
     }
 
+    /**
+     * Verifies create order success with different numeric types.
+     */
     @IsTest
     static void testCreateOrder_Success_WithDifferentNumericTypes() {
         Id accountId = ACCOUNT_ID;
@@ -451,6 +481,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order success type exception.
+     */
     @IsTest
     static void testCreateOrder_Success_TypeException() {
         ApplicationDependencyTestKit.Data d = new ApplicationDependencyTestKit.Data();
@@ -499,6 +532,9 @@ private class OrderRestResourceTest {
         }
     }
 
+    /**
+     * Verifies create order success aura handled exception.
+     */
     @IsTest
     static void testCreateOrder_Success_AuraHandledException() {
         Id accountId = ACCOUNT_ID;

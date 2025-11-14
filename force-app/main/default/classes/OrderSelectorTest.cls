@@ -5,6 +5,9 @@
 @isTest
 private class OrderSelectorTest {
 
+    /**
+     * Verifies get sobject type.
+     */
     @IsTest
     static void testGetSObjectType() {
         Test.startTest();
@@ -15,6 +18,9 @@ private class OrderSelectorTest {
         System.assertEquals(Order.SObjectType, result, 'Should return Order SObjectType');
     }
 
+    /**
+     * Verifies get sobject field list.
+     */
     @IsTest
     static void testGetSObjectFieldList() {
         Test.startTest();
@@ -31,6 +37,9 @@ private class OrderSelectorTest {
         System.assert(fields.contains(Order.Pricebook2Id), 'Should contain Pricebook2Id field');
     }
 
+    /**
+     * Verifies get sobject name.
+     */
     @IsTest
     static void testGetSObjectName() {
         Test.startTest();
@@ -41,6 +50,9 @@ private class OrderSelectorTest {
         System.assertEquals('Order', result, 'Should return Order as SObject name');
     }
 
+    /**
+     * Verifies get field list string.
+     */
     @IsTest
     static void testGetFieldListString() {
         Test.startTest();
@@ -53,6 +65,9 @@ private class OrderSelectorTest {
         System.assert(result.contains('Status'), 'Should contain Status field');
     }
 
+    /**
+     * Verifies get order with items not found.
+     */
     @IsTest
     static void testGetOrderWithItems_NotFound() {
         Test.startTest();
@@ -63,6 +78,9 @@ private class OrderSelectorTest {
         System.assertEquals(null, result, 'Should return null for non-existent order');
     }
 
+    /**
+     * Verifies select sobjects by id empty set.
+     */
     @IsTest
     static void testSelectSObjectsById_EmptySet() {
         Test.startTest();
@@ -73,6 +91,9 @@ private class OrderSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for empty set');
     }
 
+    /**
+     * Verifies select sobjects by id null set.
+     */
     @IsTest
     static void testSelectSObjectsById_NullSet() {
         Test.startTest();
@@ -83,6 +104,9 @@ private class OrderSelectorTest {
         System.assertEquals(0, results.size(), 'Should return empty list for null set');
     }
 
+    /**
+     * Verifies select sobject by id not found.
+     */
     @IsTest
     static void testSelectSObjectById_NotFound() {
         Test.startTest();
@@ -93,6 +117,9 @@ private class OrderSelectorTest {
         System.assertEquals(null, result, 'Should return null for non-existent order');
     }
 
+    /**
+     * Verifies select sobjects where no where clause.
+     */
     @IsTest
     static void testSelectSObjectsWhere_NoWhereClause() {
         Test.startTest();

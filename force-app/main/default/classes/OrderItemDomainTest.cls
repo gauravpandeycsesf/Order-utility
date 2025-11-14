@@ -1,6 +1,12 @@
 @IsTest
+/**
+ * Test coverage for Order Item Domain.
+ */
 private class OrderItemDomainTest {
 
+    /**
+     * Verifies on before insert validation success.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_Success() {
         Id orderId = (Id) '801000000000001AAA';
@@ -26,6 +32,9 @@ private class OrderItemDomainTest {
         System.assert(!newItem.hasErrors(), 'OrderItem should not have errors');
     }
 
+    /**
+     * Verifies on before insert validation no order.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_NoOrder() {
         Id productId = (Id) '01t000000000002AAA';
@@ -47,6 +56,9 @@ private class OrderItemDomainTest {
         System.assert(newItem.hasErrors(), 'OrderItem should have validation errors');
     }
 
+    /**
+     * Verifies on before insert validation no product.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_NoProduct() {
         Id orderId = (Id) '801000000000002AAA';
@@ -66,6 +78,9 @@ private class OrderItemDomainTest {
         System.assert(newItem.hasErrors(), 'OrderItem should have validation errors');
     }
 
+    /**
+     * Verifies on before insert validation invalid quantity.
+     */
     @IsTest
     static void testOnBeforeInsert_Validation_InvalidQuantity() {
         Id orderId = (Id) '801000000000003AAA';
@@ -89,6 +104,9 @@ private class OrderItemDomainTest {
         System.assert(newItem.hasErrors(), 'OrderItem should have validation errors');
     }
 
+    /**
+     * Verifies on before update validation.
+     */
     @IsTest
     static void testOnBeforeUpdate_Validation() {
         Id orderId = (Id) '801000000000004AAA';

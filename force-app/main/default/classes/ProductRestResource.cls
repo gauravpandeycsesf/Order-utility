@@ -1,10 +1,24 @@
 @RestResource(urlMapping='/products/*')
+/**
+ * REST resource that exposes product search capabilities to external clients.
+ */
 global with sharing class ProductRestResource {
 
+    /**
+     * Provides access to shared dependencies for the resource.
+     *
+     * @return ApplicationDependencyProvider instance.
+     */
     private static ApplicationDependencyProvider dependencies() {
         return ApplicationDependencyContext.getProvider();
     }
     
+    /**
+     * Returns available products filtered by name and scoped to a pricebook.
+     * Query parameters:
+     *  - name (optional): substring match for Product2.Name
+     *  - pricebookId (required): pricebook that limits the result set
+     */
     @HttpGet
     global static void getProductsByName() {
         RestRequest req = RestContext.request;
@@ -38,6 +52,11 @@ global with sharing class ProductRestResource {
     global class ErrorResponse {
         global String error { get; set; }
         
+        /**
+         * Simple error payload used by the product API.
+         *
+         * @param errorMessage message returned to the caller.
+         */
         public ErrorResponse(String errorMessage) {
             this.error = errorMessage;
         }

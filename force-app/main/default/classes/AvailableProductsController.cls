@@ -1,9 +1,23 @@
+/**
+ * Aura controller that surfaces product availability and supports adding products to orders.
+ */
 public with sharing class AvailableProductsController {
 
+    /**
+     * Provides access to shared dependencies for controller logic.
+     *
+     * @return ApplicationDependencyProvider instance from the dependency context.
+     */
     private static ApplicationDependencyProvider dependencies() {
         return ApplicationDependencyContext.getProvider();
     }
     
+    /**
+     * Returns the product tree that matches the supplied filter criteria.
+     *
+     * @param request container with order, pricebook, and search parameters.
+     * @return List of nodes representing available products.
+     */
     @AuraEnabled(cacheable=true)
     public static List<ProductTreeNode> getAvailableProducts(AvailableProductsRequest request) {
         try {
@@ -13,6 +27,12 @@ public with sharing class AvailableProductsController {
         }
     }
     
+    /**
+     * Adds or updates products on an order using the provided quantity map.
+     *
+     * @param request contains order id, optional pricebook id, and quantities keyed by product.
+     * @return summary message indicating how many records were processed.
+     */
     @AuraEnabled
     public static String addProductsToOrderWithQuantities(AddProductsRequest request) {
         try {
@@ -57,6 +77,12 @@ public with sharing class AvailableProductsController {
         }
     }
     
+    /**
+     * Converts user-provided maps into a strongly typed Id to Decimal map for quantities.
+     *
+     * @param productIdToQuantityObj map coming from Lightning or REST payloads.
+     * @return Map with Id keys and Decimal quantities.
+     */
     private static Map<Id, Decimal> deserializeProductQuantityMap(Object productIdToQuantityObj) {
         if (productIdToQuantityObj == null) {
             return new Map<Id, Decimal>();
@@ -91,6 +117,12 @@ public with sharing class AvailableProductsController {
         throw new AuraHandledException('Invalid productIdToQuantity format. Expected Map<Object, Object>, Map<String, Object>, or Map<Id, Decimal>');
     }
     
+    /**
+     * Converts a string-keyed map into the strongly typed product quantity map.
+     *
+     * @param stringMap map whose keys are string versions of product ids.
+     * @return Map<Id, Decimal> suitable for downstream processing.
+     */
     private static Map<Id, Decimal> convertStringMapToProductQuantityMap(Map<String, Object> stringMap) {
         Map<Id, Decimal> result = new Map<Id, Decimal>();
         
@@ -108,6 +140,12 @@ public with sharing class AvailableProductsController {
         return result;
     }
     
+    /**
+     * Attempts to convert any supported object type into a Decimal quantity.
+     *
+     * @param qtyObj raw quantity supplied by client-side code.
+     * @return Decimal representation of the value.
+     */
     private static Decimal convertToDecimal(Object qtyObj) {
         if (qtyObj instanceof Decimal) {
             return (Decimal) qtyObj;
@@ -122,6 +160,9 @@ public with sharing class AvailableProductsController {
         }
     }
     
+    /**
+     * Request DTO for retrieving available products.
+     */
     public class AvailableProductsRequest {
         @AuraEnabled public Id orderId { get; set; }
         @AuraEnabled public Id pricebookId { get; set; }
@@ -129,12 +170,18 @@ public with sharing class AvailableProductsController {
         @AuraEnabled public String parentName { get; set; }
     }
     
+    /**
+     * Request DTO for adding products with explicit quantities to an order.
+     */
     public class AddProductsRequest {
         @AuraEnabled public Id orderId { get; set; }
         @AuraEnabled public Object productIdToQuantity { get; set; }
         @AuraEnabled public Id pricebookId { get; set; }
     }
     
+    /**
+     * Represents a product tree node returned to the UI.
+     */
     public class ProductTreeNode {
         @AuraEnabled public String name { get; set; }
         @AuraEnabled public String label { get; set; }

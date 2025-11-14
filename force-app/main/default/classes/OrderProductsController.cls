@@ -1,9 +1,23 @@
+/**
+ * Aura controller that exposes order item operations to the LWC layer.
+ */
 public with sharing class OrderProductsController {
 
+    /**
+     * Provides convenient access to shared dependencies.
+     *
+     * @return dependency provider instance.
+     */
     private static ApplicationDependencyProvider dependencies() {
         return ApplicationDependencyContext.getProvider();
     }
     
+    /**
+     * Returns all order items for an order, wrapped for UI consumption.
+     *
+     * @param orderId order identifier.
+     * @return list of OrderItemWrapper rows.
+     */
     @AuraEnabled(cacheable=true)
     public static List<OrderItemWrapper> getOrderItems(Id orderId) {
         try {
@@ -20,6 +34,15 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Returns a page of order items plus pagination metadata.
+     *
+     * @param orderId order identifier.
+     * @param offset starting row offset.
+     * @param pageSize rows per page.
+     * @param cacheBuster unused value that forces cache refresh.
+     * @return wrapper containing page data.
+     */
     @AuraEnabled(cacheable=true)
     public static PaginatedOrderItemsResult getOrderItemsPaginated(Id orderId, Integer offset, Integer pageSize, Long cacheBuster) {
         try {
@@ -42,6 +65,12 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Indicates whether the specified order can be activated.
+     *
+     * @param orderId order identifier.
+     * @return true when activation criteria are met.
+     */
     @AuraEnabled(cacheable=true)
     public static Boolean canActivateOrder(Id orderId) {
         try {
@@ -51,6 +80,12 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Activates the selected order.
+     *
+     * @param orderId order identifier.
+     * @return success message for UI display.
+     */
     @AuraEnabled
     public static String activateOrder(Id orderId) {
         try {
@@ -61,6 +96,12 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Retrieves the current status of an order.
+     *
+     * @param orderId order identifier.
+     * @return status picklist value or null.
+     */
     @AuraEnabled(cacheable=true)
     public static String getOrderStatus(Id orderId) {
         try {
@@ -71,6 +112,12 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Updates line item quantities in bulk.
+     *
+     * @param orderItemUpdates map of order item ids to new quantities.
+     * @return success message once updates complete.
+     */
     @AuraEnabled
     public static String updateOrderItemQuantities(Map<Id, Decimal> orderItemUpdates) {
         try {
@@ -81,6 +128,12 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Deletes the specified order items.
+     *
+     * @param orderItemIds ids of items to remove.
+     * @return success message once deletion completes.
+     */
     @AuraEnabled
     public static String deleteOrderItems(List<Id> orderItemIds) {
         try {
@@ -91,6 +144,9 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Lightweight DTO that surfaces order item fields to Lightning components.
+     */
     public class OrderItemWrapper {
         @AuraEnabled public Id id { get; set; }
         @AuraEnabled public String productName { get; set; }
@@ -100,6 +156,11 @@ public with sharing class OrderProductsController {
         @AuraEnabled public Decimal totalPrice { get; set; }
         @AuraEnabled public String description { get; set; }
         
+        /**
+         * Creates the wrapper from an OrderItem record.
+         *
+         * @param item order item supplying values.
+         */
         public OrderItemWrapper(OrderItem item) {
             this.id = item.Id;
             this.productName = item.Product2.Name;
@@ -111,6 +172,9 @@ public with sharing class OrderProductsController {
         }
     }
     
+    /**
+     * Response wrapper returned by paginated queries.
+     */
     public class PaginatedOrderItemsResult {
         @AuraEnabled public List<OrderItemWrapper> items { get; set; }
         @AuraEnabled public Integer totalCount { get; set; }
